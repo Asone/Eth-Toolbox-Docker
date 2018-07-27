@@ -10,7 +10,7 @@ RUN git clone https://github.com/Magicking/Clixplorer
 WORKDIR Clixplorer
 
 RUN npm install
-RUN npm install i -g browserify
+RUN npm install -g browserify
 
 FROM nginx:alpine
 
