@@ -3,9 +3,10 @@ FROM node:alpine
 MAINTAINER Nelson Herbin <nelson@herbin.info>
 
 LABEL name=truffle
+LABEL version=1
 
-RUN git clone https://github.com/tomochain/eth-net-intelligence-api.git
-
-WORKDIR "./truffle"
-
-RUN npm i 
+RUN apk update && apk upgrade && apk add -t .gyp --no-cache git python g++ make bash nodejs npm
+RUN npm install -g truffle
+WORKDIR truffle
+RUN truffle unbox webpack
+COPY . .
