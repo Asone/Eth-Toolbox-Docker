@@ -69,10 +69,10 @@ On build service will create a default truffle project in `./smart-contracts/` i
 use run `docker-compose exec truffle truffle <truffle command>` to use the service. 
 
 e.g : 
-    - compile: `docker-compose exec truffle truffle compile`
-    - deploy: `docker-compose exec truffle truffle deploy`
-    - migrate: `docker-compose exec truffle truffle migrate`  
-    - test: run `docker-compose exec truffle truffle test` 
+ - compile: `docker-compose exec truffle truffle compile`
+ - deploy: `docker-compose exec truffle truffle deploy`
+ - migrate: `docker-compose exec truffle truffle migrate`
+ - test: run `docker-compose exec truffle truffle test` 
 
 truffle files should be stored in this directory. 
 
