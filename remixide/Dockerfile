@@ -11,3 +11,6 @@ WORKDIR "/remix-ide/"
 
 RUN npm install
 RUN npm run setupremix  # this will clone https://github.com/ethereum/remix for you and link it to remix-ide
+
+EXPOSE 8080
+EXPOSE 80

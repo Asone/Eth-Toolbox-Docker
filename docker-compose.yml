@@ -106,6 +106,7 @@ services:
     chainnet:
       ipv4_address: 172.25.0.103
   
+  
   ganache:
     image: trufflesuite/ganache-cli
     ports:
@@ -126,15 +127,29 @@ services:
       - 'robot robot robot robot robot robot robot robot robot robot robot robot' # Give mnemonic seed so you can sync funded accounts with metamask
       - --db=/ethereum_data # saving db
   
+  # Remix IDE for smart-contract dev & debug
   remixide:     
     ports:
-      - "8080:8080"
+      - 8080:8080
     build:
       context: ./remixide
     container_name: remixide
     entrypoint:
-    - npm
-    - start
+      - npm
+      - start
+
+  # PoA block explorer. Provided by Magicking
+  clixplorer:
+    container_name: clixplorer
+    build:
+      context: ./clixplorer
+    command: [nginx]
+    tty: true
+    stdin_open: true
+    volumes: 
+      - .:/usr/share/nginx/html:ro
+    ports:
+      - 80:8001
 
 networks:
   chainnet:
