@@ -1,14 +1,35 @@
 # (WIP) Ethdev toolbox docker
 
-A set of Docker images to ease the install and use of ethereum protocol. 
+**DISCLAMER : This is a Work In Progress project and all services might not be functional yet.
 
-*Launching all services at the same time is an heavy process due to the multitude of services. If you decide to run them all at once, please note that it can take a while before everything gets ready*
+A set of Docker images to ease the install, config and use of ethereum protocol. 
+
+It provides the following containers : 
+- [`Geth + Eth-netstats`] : Local PoA Ethereum chain and monitoring ✅
+- [`ganache-cli`]() : Local Dev network with Ganache-cli ✅
+- [`remix-ide`]() : Smart-contract IDE for development & debug ❌
+- [`MyEtherwallet`]() : Ethereum Wallet manager ❓
+- [`Clixplorer`]() : Block explorer for PoA network ❌
+- [`PoA Explorer`]() : Block explorer for PoA network ❌ 
+- [`Truffle`]() : Smart-contracts compiler and unit tester ❌
+- [`IPFS`]() : local IPFS node ❌
+
+
+Please, note that **it is NOT recommended to start all services at once** as some tools are redundant and many libraries quite heavy to install and run. It is **instead** recommended to **pick what services to launch and customize the configuration provided in `docker-compose.yml`** instead.
 
 ## Local Ethereum Network
+
 A set of Docker images to create a local Ethereum network with three nodes and a monitor. This was built to understand how local Ethereum networks have to be set up and to provide a local test environment. **Never use this in a productive environment, as the docker-compose.yml contains hardcoded passwords and private keys for convenience** 
 
 ### Usage
-Setting up this networks requires you to install Docker. Clone the repository, and run `docker-compose up` from the repository root. The network should start and synchronize without any further configuration. It is using the Clique protocol (Proof-of-Authority), so the network runs very efficiently and does not use a lot of energy.
+
+run `docker-compose up geth-bootnode geth-dev-miner-1 geth-dev-miner-2 geth-dev-miner-3 geth-monitor-backend geth-monitor-frontend` from the repository root.
+
+ It will run the required services for running a PoA network with monitoring.
+
+ The network should start and synchronize without any further configuration. It is using the Clique protocol (Proof-of-Authority), so the network runs very efficiently and does not use a lot of energy.
+
+The started  services are described below in the next paragraphs.
 
 ### The bootnode
 The nodes in the network are connecting with the bootnode. This is a special ethereum node, designed to provide a register of the existing nodes in the network. The parameter `nodekeyhex`in the `docker-compose.yml` is needed to derive the `enodeID` which is later passed to the other nodes. The IP needs to be fixed, as the other nodes need to know where to find the bootnode, and DNS is not supported. The bootnode does not participate in synchronization of state or mining.
@@ -23,6 +44,7 @@ The RPC Ports of the nodes are mapped to your localhost, the addresses are:
 * [http://localhost:8547](http://localhost:8547) - geth-miner-3
 
 ### Monitoring
+
 The monitoring is being provided by two nodes, the monitoring-backend and the monitoring-frontend. The backend connects to the ethereum nodes and retrieves metrics from them. It communicates with the monitoring-frontend with websockets. The frontend can be found under [http://localhost:3000](http://localhost:3000)
 
 provided by : [javahippie](https://github.com/javahippie/geth-dev) 
@@ -31,25 +53,52 @@ provided by : [javahippie](https://github.com/javahippie/geth-dev)
 
 A fast RPC client for development and testing. 
 
-### usage
+### Usage
 
-Start the service. You should be able to connect to `localhost:8585`. Port has been changed to avoid conflict with miners.
+run `docker-compose up ganache`. You should be able to connect through[localhost:8585]()`. 
+
+Port has been changed to avoid conflict with miners.
+
+### Configuration
+
+You can configure [ganache-cli parameters]() of ganache-cli in the  `docker-compose.yml` file. 
+
+## Truffle
+
+Truffle is a smart-contract development framework which provides unit testings, ABI generation and deployment strategy for smart-contracts.
+
+### Usage
+
+run `docker-compose exec truffle truffle compile`.
+
+On build service will create a default truffle project in `./smart-contracts/` if it is empty. 
+
+truffle files should be stored in this directory. 
+
 
 ## Remix IDE 
 
-A web interface  for developping, debugging and compilation test smart-contracts
+A web interface for developping, debugging and compilation test smart-contracts
 
-## TODO : Truffle
+### [TODO] Usage
 
-### TODO : build contracts through docker
+### [TODO] Configuration 
 
-### TODO : unit tests of contracts through docker
+## [TODO] Truffle
+
+### [TODO] Build 
+
+### [TODO] Test
 
 ## Clixplorer
 
 A block explorer for PoA Eth network. 
 
-Provided by [Magicking](https://github.com/Magicking/Clixplorer)
+### Usage 
 
-### TODO: Usage
+run `docker-compose up clixplorer` and connect to [localhost:xxxx](http://localhost:xxxx). 
+
+### [TODO] Configuration 
+
+Provided by [Magicking](https://github.com/Magicking/Clixplorer)
 
