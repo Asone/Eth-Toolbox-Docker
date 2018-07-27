@@ -1,17 +1,17 @@
 # (WIP) Ethdev toolbox docker
 
-**DISCLAMER : This is a Work In Progress project and all services might not be functional yet.
+**DISCLAMER : This is a Work In Progress project and all services might not be functional yet.**
 
 A set of Docker images to ease the install, config and use of ethereum protocol. 
 
 It provides the following containers : 
-- [`Geth + Eth-netstats`] : Local PoA Ethereum chain and monitoring ✅
+- [`Geth + Eth-netstats`]() : Local PoA Ethereum chain and monitoring ✅
 - [`ganache-cli`]() : Local Dev network with Ganache-cli ✅
-- [`remix-ide`]() : Smart-contract IDE for development & debug ❌
-- [`MyEtherwallet`]() : Ethereum Wallet manager ❓
-- [`Clixplorer`]() : Block explorer for PoA network ❌
+- [`remix-ide`]() : Smart-contract IDE for development & debug ❌ (1)
+- [`MyEtherwallet`]() : Ethereum Wallet manager ❓ 
+- [`Clixplorer`]() : Block explorer for PoA network ✅
 - [`PoA Explorer`]() : Block explorer for PoA network ❌ 
-- [`Truffle`]() : Smart-contracts compiler and unit tester ❌
+- [`Truffle`]() : Smart-contracts compiler and unit tester ✅
 - [`IPFS`]() : local IPFS node ❌
 
 
@@ -22,7 +22,6 @@ Please, note that **it is NOT recommended to start all services at once** as som
 A set of Docker images to create a local Ethereum network with three nodes and a monitor. This was built to understand how local Ethereum networks have to be set up and to provide a local test environment. **Never use this in a productive environment, as the docker-compose.yml contains hardcoded passwords and private keys for convenience** 
 
 ### Usage
-
 run `docker-compose up geth-bootnode geth-dev-miner-1 geth-dev-miner-2 geth-dev-miner-3 geth-monitor-backend geth-monitor-frontend` from the repository root.
 
  It will run the required services for running a PoA network with monitoring.
@@ -44,7 +43,6 @@ The RPC Ports of the nodes are mapped to your localhost, the addresses are:
 * [http://localhost:8547](http://localhost:8547) - geth-miner-3
 
 ### Monitoring
-
 The monitoring is being provided by two nodes, the monitoring-backend and the monitoring-frontend. The backend connects to the ethereum nodes and retrieves metrics from them. It communicates with the monitoring-frontend with websockets. The frontend can be found under [http://localhost:3000](http://localhost:3000)
 
 provided by : [javahippie](https://github.com/javahippie/geth-dev) 
@@ -54,24 +52,27 @@ provided by : [javahippie](https://github.com/javahippie/geth-dev)
 A fast RPC client for development and testing. 
 
 ### Usage
-
 run `docker-compose up ganache`. You should be able to connect through[localhost:8585]()`. 
 
 Port has been changed to avoid conflict with miners.
 
 ### Configuration
-
 You can configure [ganache-cli parameters]() of ganache-cli in the  `docker-compose.yml` file. 
 
 ## Truffle
-
 Truffle is a smart-contract development framework which provides unit testings, ABI generation and deployment strategy for smart-contracts.
 
 ### Usage
 
-run `docker-compose exec truffle truffle compile`.
-
 On build service will create a default truffle project in `./smart-contracts/` if it is empty. 
+
+use run `docker-compose exec truffle truffle <truffle command>` to use the service. 
+
+e.g : 
+    - compile: `docker-compose exec truffle truffle compile`
+    - deploy: `docker-compose exec truffle truffle deploy`
+    - migrate: `docker-compose exec truffle truffle migrate`  
+    - test: run `docker-compose exec truffle truffle test` 
 
 truffle files should be stored in this directory. 
 
