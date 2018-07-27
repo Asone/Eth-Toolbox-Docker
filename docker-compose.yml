@@ -106,8 +106,7 @@ services:
     chainnet:
       ipv4_address: 172.25.0.103
   
-  
-  ganache:
+  ganachecli:
     image: trufflesuite/ganache-cli
     ports:
       - "8585:8585"
@@ -150,6 +149,16 @@ services:
       - .:/usr/share/nginx/html:ro
     ports:
       - 80:8001
+  
+  truffle:
+    container_name: truffle
+    command: truffle compile --watch
+    build:
+      context: ./truffle
+    tty: true 
+    stdin_open: true 
+    volumes: 
+      - ./smart-contracts/:/truffle/
 
 networks:
   chainnet:
